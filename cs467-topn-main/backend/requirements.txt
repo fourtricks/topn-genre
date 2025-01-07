@@ -1,0 +1,8 @@
+Flask
+flask-cors
+torch
+librosa
+numpy
+audioread
+gunicorn
+pydub
