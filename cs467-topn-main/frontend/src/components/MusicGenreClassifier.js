@@ -15,7 +15,7 @@ export const MusicGenreClassifier = () => {
   // const MUSIC_GENRE_CLASSIFICATION_API = "http://127.0.0.1:8000/"; 
 
   // Production URL - Use this when testing in deployment/production instance
-  const MUSIC_GENRE_CLASSIFICATION_API = "https://top-n-music-genre-classification-backend.onrender.com"; 
+  const MUSIC_GENRE_CLASSIFICATION_API = "https://topn-genre.onrender.com"; 
 
   // Function to handle file selection and open modal
   const handleFileChange = (event) => {
@@ -34,31 +34,35 @@ export const MusicGenreClassifier = () => {
     formData.append('file', file);
 
     try {
-      // Use for development instance
-      // const response = await fetch(`http://127.0.0.1:8000/predict`, {
-
-      // Use for production instance
-      const response = await fetch(`${MUSIC_GENRE_CLASSIFICATION_API}/predict`, {
+      // Production URL or fallback to development URL
+      const apiUrl = process.env.MUSIC_GENRE_CLASSIFICATION_API || "http://127.0.0.1:8000";
+    
+      console.log("Calling API at:", `${apiUrl}/predict`);
+    
+      const response = await fetch(`${apiUrl}/predict`, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-        },
-        body: formData,
+        body: formData,  // FormData automatically sets multipart/form-data
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setPredictions(data.top_genres); // Update predictions from response
+    
+      if (!response.ok) {
+        const errorText = await response.text();  // Read as plain text if not JSON
+        try {
+          const errorData = JSON.parse(errorText);
+          setErrorMessage(errorData.error || "There was an issue with the audio file.");
+        } catch (err) {
+          setErrorMessage(`Error: ${response.statusText || "Unknown error occurred"}`);
+        }
       } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.error || "There was an issue with the audio file.");
+        const data = await response.json();
+        setPredictions(data.top_genres || []);  // Default to an empty array if no data
       }
     } catch (error) {
-      setErrorMessage("Failed to upload the file. Please try again.");
-      console.error("Error uploading file:", error);
+      setErrorMessage("Failed to upload the file. Please check your network or API.");
+      console.error("Network or API error:", error);
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (
