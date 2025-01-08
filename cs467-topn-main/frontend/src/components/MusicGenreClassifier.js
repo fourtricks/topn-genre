@@ -35,7 +35,7 @@ export const MusicGenreClassifier = () => {
 
     try {
       // Production URL or fallback to development URL
-      const apiUrl = process.env.MUSIC_GENRE_CLASSIFICATION_API || "http://127.0.0.1:8000";
+      const apiUrl = MUSIC_GENRE_CLASSIFICATION_API || "http://127.0.0.1:8000";
     
       console.log("Calling API at:", `${apiUrl}/predict`);
     
