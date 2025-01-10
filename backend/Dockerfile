@@ -21,8 +21,6 @@ RUN pip install --no-cache-dir torch==2.0.1 --index-url https://download.pytorch
 # Copy the application files for the build stage
 COPY . .
 
----
-
 # Stage 2: Minimal production image
 FROM python:3.11-slim
 
