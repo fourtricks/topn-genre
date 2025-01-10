@@ -1,14 +1,16 @@
 # Base image for Node.js
 FROM node:18
 
-# Set working directory inside container
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy only package.json and lock files to leverage Docker cache
 COPY package*.json ./
-RUN npm install
 
-# Copy the rest of the app
+# Install dependencies with retry and without optional packages
+RUN npm install --legacy-peer-deps --prefer-offline --no-audit --progress=false
+
+# Copy the rest of the app files
 COPY . .
 
 # Build the React app
