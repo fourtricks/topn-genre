@@ -3,7 +3,7 @@ Flask
 flask-cors
 torch==2.0.1 # or just `torch==2.0.1` for simpler setup
 librosa
-numpy
+numpy<2.0.0
 audioread
 gunicorn
 pydub

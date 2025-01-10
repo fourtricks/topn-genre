@@ -11,6 +11,7 @@ COPY requirements.txt .
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libsndfile1 \
+    ffmpeg \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install CPU-optimized version of PyTorch from PyPI directly (no '+cpu' needed)
