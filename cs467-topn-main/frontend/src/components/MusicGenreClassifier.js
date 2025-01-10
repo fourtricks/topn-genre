@@ -11,11 +11,8 @@ export const MusicGenreClassifier = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Development URL - Use this when testing locally with npm start
-  // const MUSIC_GENRE_CLASSIFICATION_API = "http://127.0.0.1:8000/"; 
-
-  // Production URL - Use this when testing in deployment/production instance
-  const MUSIC_GENRE_CLASSIFICATION_API = "https://topn-genre.onrender.com"; 
+  // API URL will be relative because frontend and backend are on the same instance
+  const MUSIC_GENRE_CLASSIFICATION_API = "/predict";
 
   // Function to handle file selection and open modal
   const handleFileChange = (event) => {
@@ -34,12 +31,9 @@ export const MusicGenreClassifier = () => {
     formData.append('file', file);
 
     try {
-      // Production URL or fallback to development URL
-      const apiUrl = MUSIC_GENRE_CLASSIFICATION_API || "http://127.0.0.1:8000";
+      console.log("Calling API at:", `${MUSIC_GENRE_CLASSIFICATION_API}`);
     
-      console.log("Calling API at:", `${apiUrl}/predict`);
-    
-      const response = await fetch(`${apiUrl}/predict`, {
+      const response = await fetch(`${MUSIC_GENRE_CLASSIFICATION_API}`, {
         method: 'POST',
         body: formData,  // FormData automatically sets multipart/form-data
       });
@@ -62,7 +56,6 @@ export const MusicGenreClassifier = () => {
     } finally {
       setLoading(false);
     }
-    
   };
 
   return (
@@ -94,7 +87,7 @@ export const MusicGenreClassifier = () => {
         ) : predictions.length > 0 ? (
           <>
             {/* Display file name using state variable and property */}
-            <h2 className="text-2xl dark:text-gray-200 font-bold mb-6">Genre Match Results: <p class="font-normal">{selectedFile.name.slice(0,-4)}</p></h2>
+            <h2 className="text-2xl dark:text-gray-200 font-bold mb-6">Genre Match Results: <p className="font-normal">{selectedFile.name.slice(0,-4)}</p></h2>
             <GenrePredictionChart predictions={predictions}/>
           </>
         ) : null}

@@ -3,9 +3,18 @@ version: '3.8'
 services:
   backend:
     build:
-      context: ./backend  # Path to the backend folder
+      context: ./backend
     ports:
       - "8000:8000"
     environment:
-      - PORT=8000
-    restart: always
+      - FLASK_ENV=production
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:3000"  # Serve frontend on port 80 (HTTP)
+    stdin_open: true
+    tty: true
