@@ -1,6 +1,6 @@
 Flask
 flask-cors
-torch
+torch==2.0.1+cpu
 librosa
 numpy
 audioread
