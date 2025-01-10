@@ -7,14 +7,14 @@ WORKDIR /app
 # Copy the requirements and install dependencies
 COPY requirements.txt .
 
-# Install dependencies with optimizations
+# Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libsndfile1 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only version of PyTorch and dependencies
-RUN pip install --no-cache-dir --find-links https://download.pytorch.org/whl/cpu torch==2.0.1+cpu \
+# Install CPU-optimized version of PyTorch from PyPI directly (no '+cpu' needed)
+RUN pip install --no-cache-dir torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu \
     && pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your app
