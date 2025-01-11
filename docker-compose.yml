@@ -8,13 +8,12 @@ services:
       - "8000:8000"
     environment:
       - FLASK_ENV=production
-    depends_on:
-      - nginx
+    restart: always  # Ensure the backend restarts if it crashes
 
   frontend:
     build:
       context: ./frontend
-    command: npm run build  # Build React app
+    command: npm run build  # Build the React app
     stdin_open: true
     tty: true
 
@@ -23,9 +22,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./frontend/build:/usr/share/nginx/html  # Serve built frontend
     depends_on:
       - backend
-      - frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Nginx config for serving HTTPS and routing
+      - ./frontend/build:/usr/share/nginx/html  # Serve the React app's build folder as static files
+    restart: always
