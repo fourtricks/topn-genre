@@ -13,8 +13,7 @@ torch.backends.quantized.engine = 'fbgemm'  # Use 'fbgemm' for x86 CPUs; if issu
 
 # Define the model
 app = Flask(__name__)
-# CORS(app)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": ["https://genrewizard.com", "http://genrewizard.com"]}})
 
 # Increase fto 50MB file size limit for flask
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
