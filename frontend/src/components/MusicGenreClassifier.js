@@ -12,7 +12,7 @@ export const MusicGenreClassifier = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   // API URL will be relative because frontend and backend are on the same instance
-  const MUSIC_GENRE_CLASSIFICATION_API = "/predict";
+  const MUSIC_GENRE_CLASSIFICATION_API = "http://3.135.224.65:8000/predict";
 
   // Function to handle file selection and open modal
   const handleFileChange = (event) => {
