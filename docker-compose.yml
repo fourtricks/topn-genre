@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "8000:8000"  # Flask API port (external 8000 to internal 8000)
+      - "8000:8000"  # Flask API port
     environment:
       - FLASK_ENV=production
     restart: always  # Ensure the backend restarts if it crashes
@@ -15,7 +15,7 @@ services:
       context: ./frontend
     command: npm run build  # Build the React app
     ports:
-      - "80:80"  # Serve the frontend React app on port 80 (internally and externally)
+      - "80:3000"  # Serve the frontend React app on port 80 (if needed)
     stdin_open: true
     tty: true
-    restart: always  # Restart if the container crashes
+    restart: always
