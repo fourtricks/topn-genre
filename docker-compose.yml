@@ -15,7 +15,7 @@ services:
       context: ./frontend
     command: npm run build  # Build the React app
     ports:
-      - "80:3000"  # Serve the frontend React app on port 80 (if needed)
+      - "3000:3000"  # Serve the frontend React app on port 80 (if needed)
     stdin_open: true
     tty: true
     restart: always
