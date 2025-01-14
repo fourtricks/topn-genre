@@ -8,8 +8,8 @@ import logging
 import tempfile
 
 # Explicitly setting the quantization engine
-torch.backends.quantized.engine = 'qnnpack'
-# torch.backends.quantized.engine = 'fbgemm'  # Use 'fbgemm' for x86 CPUs; if issues, set to 'None'
+# torch.backends.quantized.engine = 'qnnpack' # Use 'qnnpack' for Apple Silicon (my local machine)
+torch.backends.quantized.engine = 'fbgemm'  # Use 'fbgemm' for x86 CPUs
 
 # Define the model
 app = Flask(__name__)
@@ -117,8 +117,8 @@ def predict():
         #  Adapted from source URL:
         #       https://www.geeksforgeeks.org/python-tempfile-module/
 
-        if not (file.filename.endswith('.wav') or file.filename.endswith('.mp3')):
-            logging.error("ERROR 400: Invalid file type.")
+        if file.mimetype not in ['audio/mpeg', 'audio/wav']:
+            logging.error("ERROR 400: Invalid file MIME type.")
             return jsonify({'error': 'Invalid file type, please upload a .wav or .mp3 file'}), 400
 
         with tempfile.NamedTemporaryFile(delete=False) as temp_audio:
