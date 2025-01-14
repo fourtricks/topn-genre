@@ -10,7 +10,7 @@ const Footer = () => {
         </div>
         <div className="flex space-x-6">
           <a
-            href="https://github.com"
+            href="https://github.com/fourtricks/topn-genre"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center hover:text-black dark:hover:text-gray-300 transition-colors"
@@ -19,7 +19,7 @@ const Footer = () => {
             GitHub
           </a>
           <a
-            href="mailto:example@example.com"
+            href="duncanroepke@gmail.com"
             className="flex items-center hover:text-black dark:hover:text-gray-300 transition-colors"
           >
             <Mail className="h-5 w-5 mr-2" />

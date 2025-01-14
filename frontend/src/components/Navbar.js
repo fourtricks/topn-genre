@@ -38,7 +38,7 @@ export const Navbar = ({ darkMode, setDarkMode }) => {
         {/* Right side: GitHub link and dark mode button */}
         <div className="flex items-center space-x-3">
           <a
-            href="https://github.com"
+            href="https://github.com/fourtricks/topn-genre"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:flex text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
