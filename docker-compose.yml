@@ -11,11 +11,9 @@ services:
     restart: always  # Ensure the backend restarts if it crashes
 
   frontend:
-    build:
-      context: ./frontend
-    command: npm run build  # Build the React app
+    image: nginx:latest  # Use Nginx to serve the static build files
     ports:
-      - "3000:3000"  # Serve the frontend React app on port 80 (if needed)
-    stdin_open: true
-    tty: true
+      - "80:80"  # Serve on port 80 for public access
+    volumes:
+      - ./frontend/build:/usr/share/nginx/html  # Serve the static build folder
     restart: always
