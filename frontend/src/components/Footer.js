@@ -19,7 +19,7 @@ const Footer = () => {
             GitHub
           </a>
           <a
-            href="duncanroepke@gmail.com"
+            href="mailto:duncanroepke@gmail.com"
             className="flex items-center hover:text-black dark:hover:text-gray-300 transition-colors"
           >
             <Mail className="h-5 w-5 mr-2" />
