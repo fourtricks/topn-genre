@@ -8,8 +8,8 @@ import logging
 import tempfile
 
 # Explicitly setting the quantization engine
-# torch.backends.quantized.engine = 'qnnpack'
-torch.backends.quantized.engine = 'fbgemm'  # Use 'fbgemm' for x86 CPUs; if issues, set to 'None'
+torch.backends.quantized.engine = 'qnnpack'
+# torch.backends.quantized.engine = 'fbgemm'  # Use 'fbgemm' for x86 CPUs; if issues, set to 'None'
 
 # Define the model
 app = Flask(__name__)
