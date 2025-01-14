@@ -2,66 +2,76 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import LoadingSpinner from './LoadingSpinner';
 
-export const GenrePredictionChart = ({ predictions, loading}) => (
-  <>
-
-    <div className="mt-5 w-full flex h-[400px] items-center justify-center dark:text-gray-200">
+export const GenrePredictionChart = ({ predictions, loading }) => (
+  <div className="mt-5 w-full flex items-center justify-center dark:text-gray-200">
     {loading ? (
       <LoadingSpinner />
     ) : (
-      <div className="flex w-full">
-          {/* Left Side: List of Genres and Confidence */}
-          <div className="w-1/3 p-7 flex flex-col justify-center">
-            <ul>
-              {predictions.map((pred, index) => (
-                <li key={index} className="flex justify-between items-center mb-2.5 text-lg">
-                <span className="flex items-center">
-                  <span className="text-gray-500 font-semibold pr-4" style={{ width: '30px' }}>{index + 1}.</span>
-                    <span className="text-xl font-bold capitalize">{pred[0]}</span>
-                  </span>
-                <span className="ml-4 pr-12">{(pred[1] * 100).toFixed(1)}%</span>
-                </li>
-              ))}
-            </ul>
+      <div className="flex flex-col w-full max-w-[375px] max-h-[400px] sm:max-w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden h-[75vh] sm:h-auto">
+        <div className="flex-grow overflow-y-auto p-0 sm:p-0">
+          <div className="flex flex-col sm:flex-row">
+            {/* Left Side: List of Genres and Confidence */}
+            <div className="sm:w-1/3">
+              <ul className="space-y-2">
+                {predictions.map((pred, index) => (
+                  <li key={index} className="flex justify-between items-center text-sm sm:text-lg">
+                    <span className="flex items-center">
+                      <span className="text-gray-500 font-semibold pr-2 sm:pr-4" style={{ width: '30px' }}>{index + 1}.</span>
+                      <span className="text-base sm:text-xl font-bold capitalize truncate">{pred[0]}</span>
+                    </span>
+                    <span className="ml-2 sm:ml-4 pr-8 sm:pr-12">{(pred[1] * 100).toFixed(1)}%</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Side: Bar Chart */}
+            <div className="sm:w-2/3 flex justify-center items-center">
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart
+                  data={predictions.map((pred) => ({ genre: pred[0], confidence: pred[1] }))}
+                  layout='horizontal'
+                  margin={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    type={document.documentElement.clientWidth < 640 ? 'number' : 'category'}
+                    dataKey={document.documentElement.clientWidth < 640 ? 'confidence' : 'genre'}
+                    tick={{ fill: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' }}
+                    tickLine={false}
+                    style={{ fontSize: '12px' }}
+                  />
+                  <YAxis
+                    type={document.documentElement.clientWidth < 640 ? 'category' : 'number'}
+                    dataKey={document.documentElement.clientWidth < 640 ? 'genre' : undefined}
+                    width={document.documentElement.clientWidth < 640 ? 100 : 50}
+                    tick={{ fill: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' }}
+                    style={{ fontSize: '12px' }}
+                  />
+                  <Tooltip
+                    formatter={(value) => `${(value * 100).toFixed(1)}%`}
+                    contentStyle={{
+                      backgroundColor: document.documentElement.classList.contains('dark') ? '#1F2937' : '#FFFFFF',
+                      borderColor: document.documentElement.classList.contains('dark') ? '#4B5563' : '#E5E7EB',
+                    }}
+                    itemStyle={{
+                      color: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151',
+                    }}
+                    labelStyle={{
+                      color: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151',
+                    }}
+                  />
+                  <Bar
+                    dataKey="confidence"
+                    fill="#2563EB"
+                    barSize={document.documentElement.clientWidth < 640 ? 10 : 20}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-
-        {/* Right Side: Vertical Bar Chart */}
-        <div className="w-2/3 flex justify-center items-center bg-white dark:bg-gray-900 text-white rounded-lg shadow-md">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={predictions.map(pred => ({ genre: pred[0], confidence: pred[1] }))}
-              margin={{ top: 20, bottom: 60, right: 20 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="genre"
-                interval={0}
-                angle={-45}
-                dy={10}
-                tick={{ fill: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' }} // gray-200 for dark, gray-800 for light
-              />
-              <YAxis tick={{ fill: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' }} />
-
-              <Tooltip
-                formatter={(value) => `${(value * 100).toFixed(1)}%`}
-                contentStyle={{
-                  backgroundColor: document.documentElement.classList.contains('dark') ? '#1F2937' : '#FFFFFF', // gray-800 for dark, white for light
-                  borderColor: document.documentElement.classList.contains('dark') ? '#4B5563' : '#E5E7EB', // gray-600 for dark, gray-200 for light
-                }}
-                itemStyle={{
-                  color: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' // gray-200 for dark, gray-800 for light
-                }}
-                labelStyle={{
-                  color: document.documentElement.classList.contains('dark') ? '#D1D5DB' : '#374151' // gray-200 for dark, gray-800 for light
-                }}
-              />              
-              <Bar dataKey="confidence" fill="#8884d8" />
-            </BarChart>
-          </ResponsiveContainer>
         </div>
       </div>
     )}
   </div>
-  </>
 );
-
