@@ -7,9 +7,7 @@ export const GenrePredictionChart = ({ predictions, loading }) => {
 
   // Ensure the chart data updates after mount
   useEffect(() => {
-    if (predictions.length > 0) {
-      setChartData(predictions.map((pred) => ({ genre: pred[0], confidence: pred[1] })));
-    }
+    setChartData(predictions.map((pred) => ({ genre: pred[0], confidence: pred[1] })));
   }, [predictions]);
 
   return (
@@ -18,18 +16,18 @@ export const GenrePredictionChart = ({ predictions, loading }) => {
         <LoadingSpinner />
       ) : (
         <div className="flex flex-col w-full max-w-[375px] sm:max-w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden h-[75vh] sm:h-auto">
-          <div className="flex-grow overflow-y-auto p-0 sm:p-0">
+          <div className="flex-grow overflow-y-auto p-3 sm:p-0">
             <div className="flex flex-col sm:flex-row">
               {/* Left Side: List of Genres and Confidence */}
               <div className="sm:w-1/3">
                 <ul className="space-y-2">
-                  {predictions.map((pred, index) => (
+                  {chartData.map((pred, index) => (
                     <li key={index} className="flex justify-between items-center text-sm sm:text-lg">
                       <span className="flex items-center">
                         <span className="text-gray-500 font-semibold pr-2 sm:pr-4" style={{ width: '30px' }}>{index + 1}.</span>
-                        <span className="text-base sm:text-xl font-bold capitalize truncate">{pred[0]}</span>
+                        <span className="text-base sm:text-xl font-bold capitalize truncate">{pred.genre}</span>
                       </span>
-                      <span className="ml-2 sm:ml-4 pr-8 sm:pr-12">{(pred[1] * 100).toFixed(1)}%</span>
+                      <span className="ml-2 sm:ml-4 pr-8 sm:pr-12">{(pred.confidence * 100).toFixed(1)}%</span>
                     </li>
                   ))}
                 </ul>
@@ -72,7 +70,7 @@ export const GenrePredictionChart = ({ predictions, loading }) => {
                     <Bar
                       dataKey="confidence"
                       fill="#2563EB"
-                      barSize={document.documentElement.clientWidth < 640 ? 10 : 20}
+                      barSize={document.documentElement.clientWidth < 640 ? 10 : 30}
                     />
                   </BarChart>
                 </ResponsiveContainer>
