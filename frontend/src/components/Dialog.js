@@ -15,7 +15,7 @@ export const Dialog = ({ isOpen, onClose, children }) => {
       onClick={handleOutsideClick}
     >
       <div
-        className="bg-white p-10 rounded-lg w-full max-w-5xl h-[520px] min-w-[600px] flex flex-col relative bg-white dark:bg-gray-900 text-gray-800"
+        className="bg-white p-10 rounded-lg w-full max-w-5xl h-[550px] min-w-[600px] flex flex-col relative bg-white dark:bg-gray-900 text-gray-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
