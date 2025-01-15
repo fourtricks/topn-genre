@@ -16,7 +16,7 @@ export const GenrePredictionChart = ({ predictions, loading }) => {
         <LoadingSpinner />
       ) : (
         <div className="flex flex-col w-full max-w-[375px] sm:max-w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden h-[75vh] sm:h-auto">
-          <div className="flex-grow overflow-y-auto p-3 sm:p-0">
+          <div className="flex-grow overflow-y-auto p-8 pb- sm:p-0">
             <div className="flex flex-col sm:flex-row">
               {/* Left Side: List of Genres and Confidence */}
               <div className="sm:w-1/3">
@@ -34,7 +34,7 @@ export const GenrePredictionChart = ({ predictions, loading }) => {
               </div>
 
               {/* Right Side: Bar Chart */}
-              <div className="sm:w-2/3 flex justify-center items-center">
+              <div className="sm:w-2/3 flex justify-center items-center pb-32 sm:pb-0">
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart
                     data={chartData}
